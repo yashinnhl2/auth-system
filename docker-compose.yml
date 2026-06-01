@@ -12,5 +12,18 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  backend:
+    build: ./backend
+    container_name: auth_backend
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      POSTGRES_HOST: db
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
 volumes:
   postgres_data:
